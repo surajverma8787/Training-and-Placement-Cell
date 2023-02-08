@@ -1,23 +1,23 @@
-import './App.css'
-import Header from './components/header/Header'
-import Sidebar from './components/sidebar/Sidebar'
-import Channel from './screens/channel/Channel'
-import Login from './screens/login/Login'
-import User from './screens/user/User'
-import Home from './screens/home/Home'
-import Add from './screens/add/Add'
-import { useState, useEffect } from 'react'
+import "./App.css";
+import Header from "./components/header/Header";
+import Sidebar from "./components/sidebar/Sidebar";
+import Channel from "./screens/channel/Channel";
+import Login from "./screens/login/Login";
+import User from "./screens/user/User";
+import Home from "./screens/home/Home";
+import Add from "./screens/add/Add";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom'
-import { auth } from './firebase'
+} from "react-router-dom";
+import { auth } from "./firebase";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const addStructure = (Component, props) => {
     return (
@@ -28,8 +28,8 @@ function App() {
           <Component {...props} />
         </main>
       </>
-    )
-  }
+    );
+  };
 
   const GuardedRoute = ({ component: Component, auth, ...rest }) => (
     <Route
@@ -39,28 +39,28 @@ function App() {
           addStructure(Component, props)
         ) : (
           <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
+            to={{ pathname: "/login", state: { from: props.location } }}
           />
         )
       }
     />
-  )
+  );
 
   useEffect(() => {
-    const data = localStorage.getItem('user')
+    const data = localStorage.getItem("user");
     if (data) {
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
     } else {
       auth.onAuthStateChanged((user) => {
         if (user) {
-          setIsLoggedIn(true)
+          setIsLoggedIn(true);
         }
-      })
+      });
     }
-    setIsLoaded(true)
-  }, [])
+    setIsLoaded(true);
+  }, []);
 
-  if (!isLoaded) return null
+  if (!isLoaded) return null;
 
   return (
     <div className="app">
@@ -84,7 +84,7 @@ function App() {
         </Switch>
       </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

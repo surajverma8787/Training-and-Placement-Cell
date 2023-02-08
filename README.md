@@ -5,12 +5,15 @@ Read the full tutorial here: [**>> How to Build a Team Messenger Site With React
 This example shows How to Build a Team Messenger Site With React (Slack Clone):
 
 ![Slack Clone](./screenshots/0.gif)
+
 <center><figcaption>Slack Clone</figcaption></center>
 
 ![Slack Clone](./screenshots/1.png)
+
 <center><figcaption>Slack Clone Call Screen</figcaption></center>
 
 ![Slack Clone](./screenshots/2.png)
+
 <center><figcaption>Slack Clone Login Screen</figcaption></center>
 
 ## Technology
@@ -21,6 +24,15 @@ This demo uses:
 - Firebase
 - React
 - Material Icons
+
+## Todo list
+
+- [] update message input box to support emoji，markdown and attachments
+- [] enable users to expand/collapse channel list and DM list
+- [] enable users to create a new chat from the clicking on sidebar button
+- [] refactor the code to use redux
+- [] refactor the code to use docker
+- [] refactor the code to use typescript(strech goal)
 
 ## Running the demo
 
@@ -40,24 +52,24 @@ To run the demo follow these steps:
 ```js
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx',
-  authDomain: 'xxx-xxx-xxx-xxx-xxx-xxx-xxx',
-  databaseURL: 'xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx',
-  projectId: 'xxx-xxx-xxx',
-  storageBucket: 'xxx-xxx-xxx-xxx-xxx',
-  messagingSenderId: 'xxx-xxx-xxx',
-  appId: 'xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx',
-  measurementId: 'xxx-xxx-xxx',
-}
+  apiKey: "xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx",
+  authDomain: "xxx-xxx-xxx-xxx-xxx-xxx-xxx",
+  databaseURL: "xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx",
+  projectId: "xxx-xxx-xxx",
+  storageBucket: "xxx-xxx-xxx-xxx-xxx",
+  messagingSenderId: "xxx-xxx-xxx",
+  appId: "xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx",
+  measurementId: "xxx-xxx-xxx",
+};
 
 const cometChat = {
-  APP_ID: 'xxx-xxx-xxx',
-  AUTH_KEY: 'xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx',
-  REST_KEY: 'xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx',
-  APP_REGION: 'xx',
-}
+  APP_ID: "xxx-xxx-xxx",
+  AUTH_KEY: "xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx",
+  REST_KEY: "xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx",
+  APP_REGION: "xx",
+};
 
-export { firebaseConfig, cometChat }
+export { firebaseConfig, cometChat };
 ```
 
 11. Make sure to exclude **app.config.js** in your gitIgnore file from being exposed online.

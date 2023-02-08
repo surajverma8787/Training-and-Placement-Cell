@@ -19,17 +19,44 @@
   margin-bottom: 40px;
 }
 
-.login__container > button {
-  margin-top: 50px;
+.third_party_login > button.google {
+  margin-top: 20px;
   text-transform: inherit !important;
-  background-color: #0a8d48;
-  color: white;
-  border: 1px solid #0a8d48;
+  background-color: #fff;
+  color: #4285f4;
+  border: 2px solid #4285f4;
 }
 
-.login__container > button:hover {
-  background-color: transparent;
-  color: #0a8d48;
+.third_party_login > button.google:hover {
+  text-decoration: none;
+}
+
+.third_party_login > button.apple {
+  margin-top: 10px;
+  text-transform: inherit !important;
+  background-color: #fff;
+  border: 2px solid #1d1c1d;
+}
+
+.third_party_login > button.apple:hover {
+  text-decoration: none;
+}
+.google > span > img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.apple > span > img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.third_party_login {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 #loading {
@@ -49,8 +76,12 @@
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 @-webkit-keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }

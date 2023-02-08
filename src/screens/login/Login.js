@@ -1,77 +1,107 @@
-import './Login.css'
-import { Button } from '@material-ui/core'
-import { auth, provider } from '../../firebase'
-import { CometChat } from '@cometchat-pro/chat'
-import { cometChat } from '../../app.config'
-import { useState } from 'react'
+import "./Login.css";
+import { Button } from "@material-ui/core";
+import { auth, provider } from "../../firebase";
+import { CometChat } from "@cometchat-pro/chat";
+import { cometChat } from "../../app.config";
+import { useState } from "react";
+import gaoQiQiang from "../../img/gaoqiqiang.jpg";
+import daSao from "../../img/dasao.jpeg";
+
+const userData = {
+  uid: "superhero1",
+  name: "Superhero1",
+  avatar: daSao,
+};
+
+const userData1 = {
+  uid: "hero2",
+  name: "hero2",
+  avatar: gaoQiQiang,
+};
+
+const testUser = new CometChat.User(userData.uid);
+testUser.setName(userData.name);
+testUser.setAvatar(userData.avatar);
+
+const testUser1 = new CometChat.User(userData1.uid);
+testUser1.setName(userData1.name);
+testUser1.setAvatar(userData1.avatar);
 
 function Login() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const signIn = () => {
-    setLoading(true)
-    auth
-      .signInWithPopup(provider)
-      .then((res) => loginCometChat(res.user))
-      .catch((error) => {
-        setLoading(false)
-        alert(error.message)
-      })
-  }
+    // setLoading(true)
+    // auth
+    //   .signInWithPopup(provider)
+    //   .then((res) => loginCometChat(res.user))
+    //   .catch((error) => {
+    //     setLoading(false)
+    //     alert(error.message)
+    //   })
+    loginCometChat(testUser);
+  };
 
   const loginCometChat = (data) => {
-    const authKey = cometChat.AUTH_KEY
+    const authKey = cometChat.AUTH_KEY;
 
     CometChat.login(data.uid, authKey)
       .then((u) => {
-        localStorage.setItem('user', JSON.stringify(data))
-        window.location.href = '/'
-        console.log(u)
-        setLoading(false)
+        localStorage.setItem("user", JSON.stringify(data));
+        window.location.href = "/";
+        console.log("login successfully", u);
+        setLoading(false);
       })
       .catch((error) => {
-        if (error.code === 'ERR_UID_NOT_FOUND') {
-          signUpWithCometChat(data)
+        if (error.code === "ERR_UID_NOT_FOUND") {
+          signUpWithCometChat(data);
         } else {
-          console.log(error)
-          setLoading(false)
-          alert(error.message)
+          console.log(error);
+          setLoading(false);
+          alert(error.message);
         }
-      })
-  }
+      });
+  };
 
   const signUpWithCometChat = (data) => {
-    const authKey = cometChat.AUTH_KEY
-    const user = new CometChat.User(data.uid)
+    const authKey = cometChat.AUTH_KEY;
+    const user = new CometChat.User(data.uid);
 
-    user.setName(data.displayName)
-    user.setAvatar(data.photoURL)
+    user.setName(data.name);
+    user.setAvatar(data.avatar);
 
     CometChat.createUser(user, authKey)
       .then(() => {
-        setLoading(false)
-        alert('You are now signed up, click the button again to login')
+        setLoading(false);
+        alert("You are now signed up, click the button again to login");
       })
       .catch((error) => {
-        console.log(error)
-        setLoading(false)
-        alert(error.message)
-      })
-  }
+        console.log(error);
+        setLoading(false);
+        alert(error.message);
+      });
+  };
 
   return (
     <div className="login">
       <div className="login__container">
-        <img src={'/logo.png'} alt="Slack Logo" />
+        <img src={"/logo.png"} alt="Slack Logo" />
 
         <h4>Sign in to CometChat</h4>
         <p>cometchat.slack.com</p>
-        <Button onClick={signIn}>
-          {!loading ? 'Sign In With Google' : <div id="loading"></div>}
-        </Button>
+        <div className="third_party_login">
+          <Button className="google" onClick={signIn}>
+            <img src={"/icons8-google-48.png"} alt="Google Logo Icon" />
+            {!loading ? "Continue With Google" : <div id="loading"></div>}
+          </Button>
+          <Button className="apple" onClick={() => loginCometChat(testUser1)}>
+            <img src={"/icons8-apple-logo-30.png"} alt="Apple Logo Icon" />
+            {!loading ? "Continue With Apple" : <div id="loading"></div>}
+          </Button>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
