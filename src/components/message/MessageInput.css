@@ -1,0 +1,17 @@
+.user__chatInput > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.user__chatInput > form > input {
+  width: 90%;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 20px;
+  margin: 10px;
+  display: block;
+}
+
+.user__chatInput > form > input:focus {
+  outline: none;
+}
