@@ -15,3 +15,16 @@
 .user__chatInput > form > input:focus {
   outline: none;
 }
+
+.emoji__container {
+  position: relative;
+  top: -520px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.submit__button {
+  float: right;
+  margin-right: 20px;
+}

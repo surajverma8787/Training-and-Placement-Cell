@@ -423,7 +423,7 @@ function User() {
         <MessageInput
           placeholder={`Message ${user?.name.toLowerCase()}`}
           message={message}
-          onMessageChange={(e) => setMessage(e.target.value)}
+          onMessageChange={(newValue) => setMessage(newValue)}
           onMessageSubmit={(e) => onSubmit(e)}
         />
         {/* <div className="user__chatInput">

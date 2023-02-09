@@ -7,20 +7,30 @@ import EmojiIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import TextIcon from "@mui/icons-material/TextFormat";
 import MicNoneIcon from "@mui/icons-material/MicNone";
 import "./MessageInput.css";
+import EmojiPicker from "emoji-picker-react";
+
 function MessageInput(props) {
+  const [emoji, setEmoji] = React.useState(false);
+  const onToggleEmoji = () => {
+    setEmoji(!emoji);
+  };
+  const onEmojiChange = (emojiData) => {
+    console.log(emoji);
+    props.onMessageChange(props.message + emojiData.emoji);
+  };
   return (
     <div className="user__chatInput">
       <form>
         <input
           placeholder={props.placeholder}
           value={props.message}
-          onChange={props.onMessageChange}
+          onChange={(e) => props.onMessageChange(e.target.value)}
         />
         <div className="toolbar">
           <IconButton>
             <AddIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={onToggleEmoji}>
             <EmojiIcon />
           </IconButton>
           <IconButton>
@@ -32,9 +42,24 @@ function MessageInput(props) {
           <IconButton>
             <MicNoneIcon />
           </IconButton>
-          <IconButton type="submit" onClick={props.onMessageSubmit}>
+          <IconButton
+            className="submit__button"
+            type="submit"
+            onClick={props.onMessageSubmit}
+          >
             <SendIcon />
           </IconButton>
+        </div>
+        <div>
+          {emoji ? (
+            <div className="emoji__container">
+              <EmojiPicker
+                onEmojiClick={(emojiData, event) => {
+                  onEmojiChange(emojiData);
+                }}
+              />
+            </div>
+          ) : null}
         </div>
       </form>
     </div>
