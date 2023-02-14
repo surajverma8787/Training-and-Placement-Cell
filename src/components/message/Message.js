@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import { Avatar } from "@material-ui/core";
 import Moment from "react-moment";
 import "moment-timezone";
-
+import AddReactionOutlinedIcon from "@mui/icons-material/AddReactionOutlined";
+import CommentIcon from "@mui/icons-material/Comment";
+import ShareIcon from "@mui/icons-material/Share";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { IconButton } from "@material-ui/core";
 function Message({ uid, name, avatar, message, timestamp }) {
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
@@ -40,6 +45,25 @@ function Message({ uid, name, avatar, message, timestamp }) {
           <p className="message__text">{message}</p>
         </div>
       </div>
+      {hovered ? (
+        <div className="message__widget">
+          <IconButton>
+            <AddReactionOutlinedIcon />
+          </IconButton>
+          <IconButton>
+            <CommentIcon />
+          </IconButton>
+          <IconButton>
+            <ShareIcon />
+          </IconButton>
+          <IconButton>
+            <BookmarkBorderIcon />
+          </IconButton>
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
+        </div>
+      ) : null}
     </div>
   );
 }
