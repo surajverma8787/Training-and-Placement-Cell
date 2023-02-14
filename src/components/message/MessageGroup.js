@@ -9,12 +9,12 @@ function MessageGroup(props) {
   });
   return (
     <>
-      <>
+      <div className="divider__container">
         <div className="divider">
           <button className="divider_label">{localeDate}</button>
           <div></div>
         </div>
-      </>
+      </div>
       <>
         {props.messages.map((message) => (
           <Message
