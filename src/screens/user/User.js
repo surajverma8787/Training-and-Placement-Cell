@@ -16,6 +16,7 @@ import { CometChat } from "@cometchat-pro/chat";
 import { cometChat } from "../../app.config";
 import { Avatar, Button } from "@material-ui/core";
 import MessageInput from "../../components/message/MessageInput";
+import MessageGroup from "../../components/message/MessageGroup";
 
 function User() {
   const { id } = useParams();
@@ -90,6 +91,33 @@ function User() {
       );
   };
 
+  const getMessageGroups = () => {
+    const messageGroups = messages.reduce((groups, message) => {
+      const date = formatDate(new Date(message.sentAt * 1000));
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      return groups;
+    }, {});
+    return Object.keys(messageGroups).map((date) => {
+      return {
+        date,
+        messages: messageGroups[date],
+      };
+    });
+  };
+  function formatDate(date) {
+    let d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
   const listenForMessage = (listenerID) => {
     CometChat.addMessageListener(
       listenerID,
@@ -350,7 +378,8 @@ function User() {
 
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
   }, [id]);
-
+  console.log("messagegroups", getMessageGroups());
+  const messageGroups = getMessageGroups();
   return (
     <div className="user">
       {calling ? (
@@ -409,7 +438,7 @@ function User() {
         </div>
 
         <div id="messages-container" className="user__messages">
-          {messages.map((message) => (
+          {/* {messages.map((message) => (
             <Message
               uid={message?.sender.uid}
               name={message.sender?.name}
@@ -418,7 +447,15 @@ function User() {
               timestamp={message?.sentAt}
               key={message?.sentAt}
             />
-          ))}
+          ))} */}
+          {messageGroups.map((messageGroup) => {
+            return (
+              <MessageGroup
+                title={messageGroup.date}
+                messages={messageGroup.messages}
+              />
+            );
+          })}
         </div>
         <MessageInput
           placeholder={`Message ${user?.name.toLowerCase()}`}

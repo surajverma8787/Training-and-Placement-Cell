@@ -20,6 +20,17 @@ function MessageInput(props) {
   };
   return (
     <div className="user__chatInput">
+      <div>
+        {emoji ? (
+          <div className="emoji__container">
+            <EmojiPicker
+              onEmojiClick={(emojiData, event) => {
+                onEmojiChange(emojiData);
+              }}
+            />
+          </div>
+        ) : null}
+      </div>
       <form>
         <input
           placeholder={props.placeholder}
@@ -49,17 +60,6 @@ function MessageInput(props) {
           >
             <SendIcon />
           </IconButton>
-        </div>
-        <div>
-          {emoji ? (
-            <div className="emoji__container">
-              <EmojiPicker
-                onEmojiClick={(emojiData, event) => {
-                  onEmojiChange(emojiData);
-                }}
-              />
-            </div>
-          ) : null}
         </div>
       </form>
     </div>

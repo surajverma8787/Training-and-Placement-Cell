@@ -14,8 +14,8 @@ const userData = {
 };
 
 const userData1 = {
-  uid: "hero2",
-  name: "hero2",
+  uid: "superhero2",
+  name: "superhero2",
   avatar: gaoQiQiang,
 };
 

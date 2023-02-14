@@ -23,15 +23,32 @@ function Sidebar() {
     const limit = 10;
     const usersRequest = new CometChat.UsersRequestBuilder()
       .setLimit(limit)
-      .friendsOnly(true)
+      //   .friendsOnly(true)
       .build();
 
     usersRequest
       .fetchNext()
-      .then((userList) => setDms(userList))
+      .then((userList) => {
+        setDms(userList);
+        console.log("userList", userList);
+      })
       .catch((error) => {
         console.log("User list fetching failed with error:", error);
       });
+    // let conversationType = "user";
+    // let conversationRequest = new CometChat.ConversationsRequestBuilder()
+    //   .setLimit(limit)
+    //   .setConversationType(conversationType)
+    //   .build();
+    // conversationRequest.fetchNext().then(
+    //   (conversationList) => {
+    //     console.log("Conversation list received:", conversationList);
+    //     setDms(conversationList);
+    //   },
+    //   (error) => {
+    //     console.log("Conversation list fetching failed with error:", error);
+    //   }
+    // );
   };
 
   const getChannels = () => {

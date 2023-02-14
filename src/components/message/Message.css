@@ -26,10 +26,12 @@
   text-decoration: none;
   font-weight: 700;
   text-transform: capitalize;
+  font-size: 14px;
 }
 
 .message__text {
-  font-size: 14px;
+  font-size: 18px;
+  margin-top: 5px;
 }
 
 .message__data {
@@ -53,4 +55,9 @@
 .message__actions .MuiSvgIcon-root {
   margin-right: 10px;
   cursor: pointer;
+}
+
+.message__sent__time {
+  font-size: 11px;
+  color: grey;
 }

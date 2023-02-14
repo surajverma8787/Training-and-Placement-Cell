@@ -1,13 +1,13 @@
-import './Message.css'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Avatar } from '@material-ui/core'
-import Moment from 'react-moment'
-import 'moment-timezone'
+import "./Message.css";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Avatar } from "@material-ui/core";
+import Moment from "react-moment";
+import "moment-timezone";
 
 function Message({ uid, name, avatar, message, timestamp }) {
-  const [hovered, setHovered] = useState(false)
-  const toggleHover = () => setHovered(!hovered)
+  const [hovered, setHovered] = useState(false);
+  const toggleHover = () => setHovered(!hovered);
 
   // Moment.globalTimezone = 'America/Los_Angeles'
 
@@ -29,14 +29,19 @@ function Message({ uid, name, avatar, message, timestamp }) {
           <div className="message__details">
             <Link to={`/users/${uid}`}>{name}</Link>
             <small>
-              <Moment unix date={timestamp} format="YYYY-MM-D hh:mm A" />
+              <Moment
+                className="message__sent__time"
+                unix
+                date={timestamp}
+                format=" hh:mm A"
+              />
             </small>
           </div>
           <p className="message__text">{message}</p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Message
+export default Message;

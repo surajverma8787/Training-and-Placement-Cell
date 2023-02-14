@@ -28,6 +28,8 @@
 .user__messages {
   overflow-y: auto;
   height: calc(100vh - 35%);
+  font-family: "Lato", sans-serif;
+  padding-top: 20px;
 }
 
 .user__userName {
@@ -68,6 +70,7 @@
 
 .user__chatInput {
   border-radius: 20px;
+  position: relative;
 }
 
 .user__chatInput > form {
