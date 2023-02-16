@@ -11,7 +11,6 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CloseIcon from "@material-ui/icons/Close";
-import Message from "../../components/message/Message";
 import { CometChat } from "@cometchat-pro/chat";
 import { cometChat } from "../../app.config";
 import { Avatar, Button } from "@material-ui/core";

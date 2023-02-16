@@ -2,12 +2,14 @@ import "./Sidebar.css";
 import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import SidebarOption from "../sidebarOption/SidebarOption";
+import SidebarOptionHeader from "../sidebarOptionHeader/SidebarOptionHeader";
 import CreateIcon from "@material-ui/icons/Create";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import AlternateEmailIcon from "@material-ui/icons/AlternateEmail";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import AddIcon from "@material-ui/icons/Add";
 import { CometChat } from "@cometchat-pro/chat";
@@ -17,6 +19,8 @@ function Sidebar() {
   const [channels, setChannels] = useState([]);
   const [user, setUser] = useState(null);
   const [dms, setDms] = useState([]);
+  const [channelExpanded, setChannelExpanded] = useState(true);
+  const [dmExpanded, setDmExpanded] = useState(true);
   const history = useHistory();
 
   const getDirectMessages = () => {
@@ -103,26 +107,34 @@ function Sidebar() {
         <SidebarOption Icon={AlternateEmailIcon} title="Mentions & Reactions" />
         <SidebarOption Icon={MoreVertIcon} title="More" />
         <hr />
-        <SidebarOption Icon={ArrowDropDownIcon} title="Channels" />
+        <SidebarOptionHeader
+          Icon={channelExpanded ? ArrowDropDownIcon : ArrowRightIcon}
+          title="Channels"
+          onClickHandler={() => {
+            setChannelExpanded(!channelExpanded);
+          }}
+        />
         <hr />
-        {channels.map((channel) =>
-          channel.type === "private" ? (
-            <SidebarOption
-              Icon={LockOutlinedIcon}
-              title={channel.name}
-              id={channel.guid}
-              key={channel.guid}
-              sub="sidebarOption__sub"
-            />
-          ) : (
-            <SidebarOption
-              title={channel.name}
-              id={channel.guid}
-              key={channel.guid}
-              sub="sidebarOption__sub"
-            />
-          )
-        )}
+        {channelExpanded
+          ? channels.map((channel) =>
+              channel.type === "private" ? (
+                <SidebarOption
+                  Icon={LockOutlinedIcon}
+                  title={channel.name}
+                  id={channel.guid}
+                  key={channel.guid}
+                  sub="sidebarOption__sub"
+                />
+              ) : (
+                <SidebarOption
+                  title={channel.name}
+                  id={channel.guid}
+                  key={channel.guid}
+                  sub="sidebarOption__sub"
+                />
+              )
+            )
+          : null}
 
         <SidebarOption
           Icon={AddIcon}
@@ -131,19 +143,25 @@ function Sidebar() {
           addChannelOption
         />
         <hr />
-        <SidebarOption Icon={ArrowDropDownIcon} title="Direct Messages" />
+        <SidebarOptionHeader
+          Icon={dmExpanded ? ArrowDropDownIcon : ArrowRightIcon}
+          title="Direct Messages"
+          onClickHandler={() => setDmExpanded(!dmExpanded)}
+        />
         <hr />
-        {dms.map((dm) => (
-          <SidebarOption
-            Icon={FiberManualRecordIcon}
-            title={dm.name}
-            id={dm.uid}
-            key={dm.uid}
-            sub="sidebarOption__sub sidebarOption__color"
-            user
-            online={dm.status === "online" ? "isOnline" : ""}
-          />
-        ))}
+        {dmExpanded
+          ? dms.map((dm) => (
+              <SidebarOption
+                Icon={FiberManualRecordIcon}
+                title={dm.name}
+                id={dm.uid}
+                key={dm.uid}
+                sub="sidebarOption__sub sidebarOption__color"
+                user
+                online={dm.status === "online" ? "isOnline" : ""}
+              />
+            ))
+          : null}
       </div>
 
       <button className="sidebar__logout" onClick={logOut}>
