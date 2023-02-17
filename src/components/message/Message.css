@@ -82,3 +82,30 @@
 .message__widget button {
   padding: 5px;
 }
+
+.msg__widget__emoji__container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.reaction__bar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid lightgrey;
+  margin: 10px 50px;
+}
+
+.reaction__bar__item {
+  background-color: lightgrey;
+  border-radius: 20px;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 5px;
+  padding: 5px;
+  font-size: 11px;
+  cursor: pointer;
+}
