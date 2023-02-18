@@ -16,6 +16,8 @@ import { cometChat } from "../../app.config";
 import { Avatar, Button } from "@material-ui/core";
 import MessageInput from "../../components/message/MessageInput";
 import MessageGroup from "../../components/message/MessageGroup";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 function User() {
   const { id } = useParams();
@@ -106,6 +108,7 @@ function User() {
       };
     });
   };
+
   function formatDate(date) {
     let d = new Date(date),
       month = "" + (d.getMonth() + 1),
@@ -368,6 +371,38 @@ function User() {
       });
   };
 
+  const uploadToCometChat = async (base64) => {
+    try {
+      const response = await CometChat.callExtension(
+        "avatar",
+        "POST",
+        "v1/upload",
+        {
+          avatar: base64,
+        }
+      );
+      // update local user object
+      setUser((prevState) => ({ ...prevState, avatar: response.avatarURL }));
+      let localStorageUser = JSON.parse(localStorage.getItem("user"));
+      localStorageUser.avatar = response.avatarURL;
+      localStorage.setItem("user", JSON.stringify(localStorageUser));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const uploadAvatar = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    //get base64 encoded image
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result;
+      console.log("avatar", base64);
+      uploadToCometChat(base64);
+    };
+  };
   useEffect(() => {
     getUser(id);
     getMessages(id);
@@ -437,16 +472,6 @@ function User() {
         </div>
 
         <div id="messages-container" className="user__messages">
-          {/* {messages.map((message) => (
-            <Message
-              uid={message?.sender.uid}
-              name={message.sender?.name}
-              avatar={message.sender?.avatar}
-              message={message?.text}
-              timestamp={message?.sentAt}
-              key={message?.sentAt}
-            />
-          ))} */}
           {messageGroups.map((messageGroup) => {
             return (
               <MessageGroup
@@ -462,18 +487,6 @@ function User() {
           onMessageChange={(newValue) => setMessage(newValue)}
           onMessageSubmit={(e) => onSubmit(e)}
         />
-        {/* <div className="user__chatInput">
-          <form>
-            <input
-              placeholder={`Message ${user?.name.toLowerCase()}`}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button type="submit" onClick={(e) => onSubmit(e)}>
-              SEND
-            </button>
-          </form>
-        </div> */}
       </div>
 
       <div className={`user__details ${!toggle ? "hide__details" : ""}`}>
@@ -489,7 +502,36 @@ function User() {
         </div>
         <div className="user__detailsBody">
           <div className="user__detailsIdentity">
-            <img src={user?.avatar} alt={user?.name} />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="label"
+              className="upload__avatar__container"
+            >
+              <input
+                hidden
+                accept="image/*"
+                type="file"
+                onChange={(e) => {
+                  uploadAvatar(e);
+                }}
+              />
+              <PhotoCamera />
+            </IconButton>
+            <div className="avatar__container">
+              <img
+                className="user__avatar"
+                src={user?.avatar}
+                alt={user?.name}
+              />
+            </div>
+
+            {/* <input
+              className="upload__avatar"
+              type="file"
+              accept="image/jpeg, image/png, image/jpg"
+              onChange={(e) => uploadAvatar(e)}
+            /> */}
             <h4 className={user?.status === "online" ? "isOnline" : ""}>
               {user?.name}
               <FiberManualRecordIcon />

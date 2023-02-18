@@ -9,23 +9,17 @@ import daSao from "../../img/dasao.jpeg";
 
 const userData = {
   uid: "superhero1",
-  name: "Superhero1",
-  avatar: daSao,
+  name: "大嫂",
 };
 
 const userData1 = {
   uid: "superhero2",
-  name: "superhero2",
-  avatar: gaoQiQiang,
+  name: "强哥",
 };
 
 const testUser = new CometChat.User(userData.uid);
-testUser.setName(userData.name);
-testUser.setAvatar(userData.avatar);
 
 const testUser1 = new CometChat.User(userData1.uid);
-testUser1.setName(userData1.name);
-testUser1.setAvatar(userData1.avatar);
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -46,10 +40,11 @@ function Login() {
     const authKey = cometChat.AUTH_KEY;
 
     CometChat.login(data.uid, authKey)
-      .then((u) => {
-        localStorage.setItem("user", JSON.stringify(data));
+      .then((userData) => {
+        console.log("login user", userData);
+        localStorage.setItem("user", JSON.stringify(userData));
         window.location.href = "/";
-        console.log("login successfully", u);
+        console.log("login successfully", userData);
         setLoading(false);
       })
       .catch((error) => {

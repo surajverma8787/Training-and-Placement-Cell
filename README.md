@@ -24,6 +24,7 @@ This demo uses:
 - Firebase
 - React
 - Material Icons
+- node v16.14.2
 
 ## Todo list
 

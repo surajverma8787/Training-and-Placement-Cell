@@ -364,3 +364,29 @@
       0 0 0 30px rgba(255, 255, 255, 0.2);
   }
 }
+
+.user__avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+.avatar__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload__avatar__container {
+  position: relative;
+  top: 208px;
+  right: -47px;
+  padding: 5px;
+  background-color: lightgrey;
+  color: black;
+  padding: 5px;
+  background-color: lightgrey;
+}
