@@ -403,6 +403,15 @@ function User() {
       uploadToCometChat(base64);
     };
   };
+
+  const uploadAvatarStyle = {
+    position: "relative",
+    top: "208px",
+    right: "-47px",
+    padding: " 5px",
+    backgroundColor: "lightgrey",
+    color: "black",
+  };
   useEffect(() => {
     getUser(id);
     getMessages(id);
@@ -506,7 +515,7 @@ function User() {
               color="primary"
               aria-label="upload picture"
               component="label"
-              className="upload__avatar__container"
+              sx={uploadAvatarStyle}
             >
               <input
                 hidden

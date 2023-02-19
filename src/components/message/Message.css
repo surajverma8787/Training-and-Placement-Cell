@@ -106,5 +106,15 @@
   margin: 5px;
   padding: 5px;
   font-size: 11px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.emoji__img {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
 }

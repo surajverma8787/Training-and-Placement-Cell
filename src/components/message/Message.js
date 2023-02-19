@@ -11,6 +11,8 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton } from "@material-ui/core";
 import EmojiPicker from "emoji-picker-react";
+import * as _ from "lodash";
+
 function Message({ uid, name, avatar, message, timestamp }) {
   const [hovered, setHovered] = useState(false);
   const [reactionToggle, setReactionToggle] = useState(false);
@@ -78,19 +80,35 @@ function Message({ uid, name, avatar, message, timestamp }) {
     return acc;
   }, {});
 
+  const reactionGroups = reactions.reduce((groups, reaction) => {
+    const index = groups.findIndex((group) => {
+      return group.length > 0 && group[0].unified === reaction.unified;
+    });
+    if (index === -1) {
+      groups.push([reaction]);
+    } else {
+      groups[index].push(reaction);
+    }
+    return groups;
+  }, []);
   const ReactionBar = () => {
     return (
       <div className="reaction__bar">
-        {Object.keys(reactionCountPairs).map((reaction) => {
+        {reactionGroups.map((reactionGroup) => {
           return (
             <div
               className="reaction__bar__item"
               onClick={() => {
-                setReactions([...reactions, reaction]);
+                console.log([...reactions, _.cloneDeep(reactionGroup[0])]);
+                setReactions([...reactions, _.cloneDeep(reactionGroup[0])]);
               }}
             >
-              <span>{reaction}</span>
-              <span>{reactionCountPairs[reaction]}</span>
+              <img
+                src={reactionGroup[0].getImageUrl()}
+                alt={reactionGroup[0].names[0]}
+                className="emoji__img"
+              />
+              <span>{reactionGroup.length}</span>
             </div>
           );
         })}
@@ -99,7 +117,7 @@ function Message({ uid, name, avatar, message, timestamp }) {
   };
 
   const onEmojiClick = (event, emojiObject) => {
-    setReactions([...reactions, emojiObject.emoji]);
+    setReactions([...reactions, emojiObject]);
   };
   // Moment.globalTimezone = 'America/Los_Angeles'
 

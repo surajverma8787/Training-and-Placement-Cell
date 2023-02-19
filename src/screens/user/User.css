@@ -380,13 +380,6 @@
   justify-content: center;
 }
 
-.upload__avatar__container {
-  position: relative;
-  top: 208px;
-  right: -47px;
-  padding: 5px;
-  background-color: lightgrey;
-  color: black;
-  padding: 5px;
+.user__detailsIdentity > label:hover {
   background-color: lightgrey;
 }
