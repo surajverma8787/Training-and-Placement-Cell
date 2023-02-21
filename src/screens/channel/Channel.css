@@ -28,6 +28,7 @@
 .channel__messages {
   overflow-y: auto;
   height: calc(100vh - 35%);
+  font-family: "Lato", sans-serif;
   padding-top: 20px;
 }
 

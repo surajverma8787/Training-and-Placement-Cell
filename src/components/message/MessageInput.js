@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { IconButton } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,15 +9,20 @@ import MicNoneIcon from "@mui/icons-material/MicNone";
 import "./MessageInput.css";
 import EmojiPicker from "emoji-picker-react";
 import RichTextEditor from "./RichTextEditor";
+import { withHistory } from "slate-history";
+import { createEditor } from "slate";
+import { withReact } from "slate-react";
 
 function MessageInput(props) {
   const [emoji, setEmoji] = React.useState(false);
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const onToggleEmoji = () => {
     setEmoji(!emoji);
   };
   const onEmojiChange = (emojiData) => {
     console.log(emoji);
-    props.onMessageChange(props.message + emojiData.emoji);
+    // props.onMessageChange(props.message + emojiData.emoji);
+    editor.insertText(emojiData.emoji);
   };
   return (
     <div className="user__chatInput">
@@ -42,6 +47,7 @@ function MessageInput(props) {
           message={props.message}
           placeholder={props.placeholder}
           onMessageChange={props.onMessageChange}
+          editor={editor}
         />
         <div className="toolbar">
           <IconButton>
