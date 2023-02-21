@@ -122,9 +122,7 @@ const RichTextEditor = (props) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = props.editor;
-  console.log("editor: ", editor);
   if (props.message === "") {
-    console.log("rerendering???");
     editor.children = initialInput;
     resetNodes(editor, { nodes: initialInput });
     //re-render the editor
