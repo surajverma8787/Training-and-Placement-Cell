@@ -400,7 +400,6 @@ function User() {
     reader.readAsDataURL(file);
     reader.onload = () => {
       const base64 = reader.result;
-      console.log("avatar", base64);
       uploadToCometChat(base64);
     };
   };
@@ -422,7 +421,6 @@ function User() {
 
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
   }, [id]);
-  console.log("messagegroups", getMessageGroups());
   const messageGroups = getMessageGroups();
   return (
     <div className="user">

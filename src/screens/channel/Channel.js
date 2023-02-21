@@ -12,9 +12,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CloseIcon from "@material-ui/icons/Close";
 import LockIcon from "@material-ui/icons/Lock";
-import Message from "../../components/message/Message";
 import { CometChat } from "@cometchat-pro/chat";
 import { Avatar, Button } from "@material-ui/core";
+import MessageGroup from "../../components/message/MessageGroup";
+import MessageInput from "../../components/message/MessageInput";
 
 function Channel() {
   const { id } = useParams();
@@ -349,6 +350,35 @@ function Channel() {
       );
     }
   };
+  const getMessageGroups = () => {
+    const messageGroups = messages.reduce((groups, message) => {
+      const date = formatDate(new Date(message.sentAt * 1000));
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      return groups;
+    }, {});
+    return Object.keys(messageGroups).map((date) => {
+      return {
+        date,
+        messages: messageGroups[date],
+        id: "mg-" + messageGroups[date][0].id,
+      };
+    });
+  };
+
+  function formatDate(date) {
+    let d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
 
   useEffect(() => {
     getChannel(id);
@@ -359,7 +389,7 @@ function Channel() {
 
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
   }, [id]);
-
+  const messageGroups = getMessageGroups();
   return (
     <div className="channel">
       {calling ? (
@@ -418,30 +448,22 @@ function Channel() {
         </div>
 
         <div id="messages-container" className="channel__messages">
-          {messages.map((message) => (
-            <Message
-              uid={message?.sender.uid}
-              name={message.sender?.name}
-              avatar={message.sender?.avatar}
-              message={message?.text}
-              timestamp={message?.sentAt}
-              key={message?.sentAt}
-            />
-          ))}
+          {messageGroups.map((messageGroup) => {
+            return (
+              <MessageGroup
+                title={messageGroup.date}
+                messages={messageGroup.messages}
+                key={messageGroup.id}
+              />
+            );
+          })}
         </div>
-
-        <div className="channel__chatInput">
-          <form>
-            <input
-              placeholder={`Message ${channel?.name.toLowerCase()}`}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button type="submit" onClick={(e) => onSubmit(e)}>
-              SEND
-            </button>
-          </form>
-        </div>
+        <MessageInput
+          placeholder={`Message ${channel?.name.toLowerCase()}`}
+          message={message}
+          onMessageChange={(newValue) => setMessage(newValue)}
+          onMessageSubmit={(e) => onSubmit(e)}
+        />
       </div>
 
       <div className={`channel__details ${!toggle ? "hide__details" : ""}`}>
