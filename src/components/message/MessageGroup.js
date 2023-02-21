@@ -23,7 +23,7 @@ function MessageGroup(props) {
             avatar={message.sender?.avatar}
             message={message?.text}
             timestamp={message?.sentAt}
-            key={message?.sentAt}
+            key={message?.id}
           />
         ))}
       </>

@@ -6,7 +6,7 @@
   position: relative;
 }
 
-.message:hover {
+.message__container:hover {
   background-color: #f3f3f3;
 }
 
@@ -94,13 +94,12 @@
 .reaction__bar {
   display: flex;
   align-items: center;
-  padding: 10px;
-  margin: 10px 50px;
+  padding-left: 60px;
 }
 
 .reaction__bar__item {
   background-color: lightgrey;
-  border-radius: 20px;
+  border-radius: 12px;
   width: -moz-fit-content;
   width: fit-content;
   margin: 5px;
@@ -114,7 +113,21 @@
 }
 
 .emoji__img {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
+}
+
+.msg__widget__emoji__modal {
+  position: fixed;
+  inset: 0px;
+  background-color: transparent;
+}
+
+.msg__widget__emoji__overlay {
+  position: absolute;
+  inset: 40px;
+  background: transparent;
+  overflow: auto;
+  outline: none;
 }

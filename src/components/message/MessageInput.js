@@ -8,6 +8,7 @@ import TextIcon from "@mui/icons-material/TextFormat";
 import MicNoneIcon from "@mui/icons-material/MicNone";
 import "./MessageInput.css";
 import EmojiPicker from "emoji-picker-react";
+import RichTextEditor from "./RichTextEditor";
 
 function MessageInput(props) {
   const [emoji, setEmoji] = React.useState(false);
@@ -31,11 +32,16 @@ function MessageInput(props) {
           </div>
         ) : null}
       </div>
-      <form>
-        <input
+      <form className="user__chatInput__form">
+        {/* <input
           placeholder={props.placeholder}
           value={props.message}
           onChange={(e) => props.onMessageChange(e.target.value)}
+        /> */}
+        <RichTextEditor
+          message={props.message}
+          placeholder={props.placeholder}
+          onMessageChange={props.onMessageChange}
         />
         <div className="toolbar">
           <IconButton>

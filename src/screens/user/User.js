@@ -41,7 +41,6 @@ function User() {
 
   const findUser = (e) => {
     e.preventDefault();
-
     searchTerm(keyword);
   };
 
@@ -79,6 +78,7 @@ function User() {
     const messagesRequest = new CometChat.MessagesRequestBuilder()
       .setLimit(limit)
       .setUID(uid)
+      .hideDeletedMessages(true)
       .build();
 
     messagesRequest
@@ -105,6 +105,7 @@ function User() {
       return {
         date,
         messages: messageGroups[date],
+        id: "mg-" + messageGroups[date][0].id,
       };
     });
   };
@@ -486,6 +487,7 @@ function User() {
               <MessageGroup
                 title={messageGroup.date}
                 messages={messageGroup.messages}
+                key={messageGroup.id}
               />
             );
           })}

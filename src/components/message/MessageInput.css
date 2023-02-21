@@ -6,12 +6,13 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100%;
+  width: calc(100% - 40px);
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin: 20px;
 }
 .user__chatInput > form > input {
   width: 95%;
-  border: 1px solid gray;
-  border-radius: 3px;
   padding: 20px;
   margin: 10px;
   display: block;

@@ -1,7 +1,7 @@
 import "./Message.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Avatar } from "@material-ui/core";
+import { Avatar, Modal } from "@material-ui/core";
 import Moment from "react-moment";
 import "moment-timezone";
 import AddReactionOutlinedIcon from "@mui/icons-material/AddReactionOutlined";
@@ -12,6 +12,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton } from "@material-ui/core";
 import EmojiPicker from "emoji-picker-react";
 import * as _ from "lodash";
+import RichTextViewer from "./RichTextViewer";
+import ReactModal from "react-modal";
 
 function Message({ uid, name, avatar, message, timestamp }) {
   const [hovered, setHovered] = useState(false);
@@ -20,20 +22,20 @@ function Message({ uid, name, avatar, message, timestamp }) {
   const [reactions, setReactions] = useState([]);
 
   const MessageWidget = () => {
-    useEffect(() => {
-      if (!hovered) setReactionToggle(false);
-    }, []);
+    // useEffect(() => {
+    //   if (!hovered) setReactionToggle(false);
+    // }, []);
     if (hovered) {
       return (
         <>
           <EmojiWidget />
           <div className="message__widget">
-            <IconButton>
-              <AddReactionOutlinedIcon
-                onClick={() => {
-                  setReactionToggle(!reactionToggle);
-                }}
-              />
+            <IconButton
+              onClick={() => {
+                setReactionToggle(!reactionToggle);
+              }}
+            >
+              <AddReactionOutlinedIcon />
             </IconButton>
             <IconButton>
               <CommentIcon />
@@ -56,8 +58,18 @@ function Message({ uid, name, avatar, message, timestamp }) {
   };
 
   const EmojiWidget = () => {
-    if (reactionToggle) {
-      return (
+    return (
+      <ReactModal
+        isOpen={reactionToggle}
+        className="msg__widget__emoji__modal"
+        overlayClassName="msg__widget__emoji__overlay"
+        shouldCloseOnEsc={true}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={() => {
+          console.log("close emoji modal");
+          setReactionToggle(false);
+        }}
+      >
         <div className="msg__widget__emoji__container">
           <EmojiPicker
             onEmojiClick={(emojiData, event) => {
@@ -65,20 +77,9 @@ function Message({ uid, name, avatar, message, timestamp }) {
             }}
           />
         </div>
-      );
-    } else {
-      return null;
-    }
+      </ReactModal>
+    );
   };
-
-  const reactionCountPairs = reactions.reduce((acc, curr) => {
-    if (acc[curr]) {
-      acc[curr] += 1;
-    } else {
-      acc[curr] = 1;
-    }
-    return acc;
-  }, {});
 
   const reactionGroups = reactions.reduce((groups, reaction) => {
     const index = groups.findIndex((group) => {
@@ -122,7 +123,7 @@ function Message({ uid, name, avatar, message, timestamp }) {
   // Moment.globalTimezone = 'America/Los_Angeles'
 
   return (
-    <div>
+    <div className="message__container">
       <div
         className="message"
         onMouseEnter={toggleHover}
@@ -148,7 +149,8 @@ function Message({ uid, name, avatar, message, timestamp }) {
                 />
               </small>
             </div>
-            <p className="message__text">{message}</p>
+            {/* <p className="message__text">{message}</p> */}
+            <RichTextViewer message={message} />
           </div>
         </div>
         <MessageWidget />
