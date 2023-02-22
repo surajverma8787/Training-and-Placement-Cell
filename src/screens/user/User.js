@@ -18,6 +18,7 @@ import MessageInput from "../../components/message/MessageInput";
 import MessageGroup from "../../components/message/MessageGroup";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { storage } from "../../firebase";
 
 function User() {
   const { id } = useParams();
@@ -300,7 +301,7 @@ function User() {
         onUserJoined: (user) => {
           /* Notification received here if another user joins the call. */
           console.log("User joined call:", user);
-          /* this method can be use to display message or perform any actions if someone joining the call */
+          /* this method can be use ao display message or perform any actions if someone joining the call */
         },
         onUserLeft: (user) => {
           /* Notification received here if another user left the call. */
@@ -371,8 +372,12 @@ function User() {
         console.log("error", error);
       });
   };
-
+  /**
+   * this endpoint is buggy, it always return the same avatar
+   * @param {avatar} base64
+   */
   const uploadToCometChat = async (base64) => {
+    console.log("uploading avatar");
     try {
       const response = await CometChat.callExtension(
         "avatar",
@@ -384,6 +389,7 @@ function User() {
       );
       // update local user object
       setUser((prevState) => ({ ...prevState, avatar: response.avatarURL }));
+      console.log("response", response);
       let localStorageUser = JSON.parse(localStorage.getItem("user"));
       localStorageUser.avatar = response.avatarURL;
       localStorage.setItem("user", JSON.stringify(localStorageUser));
@@ -393,15 +399,91 @@ function User() {
   };
 
   const uploadAvatar = (e) => {
+    const storageRef = storage.ref();
+
     const file = e.target.files[0];
     if (!file) return;
-    //get base64 encoded image
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64 = reader.result;
-      uploadToCometChat(base64);
+    const metadata = {
+      contentType: file.type,
     };
+
+    const uploadTask = storageRef
+      .child("images/" + file.name)
+      .put(file, metadata);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            break;
+
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          // update user avatar in comet chat
+          // request builder
+          const authKey = cometChat.AUTH_KEY;
+          const user = new CometChat.User(
+            JSON.parse(localStorage.getItem("user"))
+          );
+          user.setAvatar(downloadURL);
+          CometChat.updateUser(user, authKey).then(
+            (user) => {
+              console.log("User details updated successfully", user);
+              // update local user object
+              setUser((prevState) => ({ ...prevState, avatar: user.avatar }));
+              let localStorageUser = JSON.parse(localStorage.getItem("user"));
+              localStorageUser.avatar = user.avatar;
+              localStorage.setItem("user", JSON.stringify(localStorageUser));
+            },
+            (error) => {
+              console.log(
+                "User details updation failed with exception:",
+                error
+              );
+            }
+          );
+        });
+      }
+    );
+
+    //get base64 encoded image
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = () => {
+    //   const base64 = reader.result;
+    //   uploadToCometChat(base64);
+    // };
   };
 
   const uploadAvatarStyle = {

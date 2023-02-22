@@ -25,3 +25,5 @@ yarn-error.log*
 .env*
 app.config.js
 *.drawio
+
+.firebaserc

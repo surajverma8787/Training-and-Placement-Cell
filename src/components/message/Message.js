@@ -60,6 +60,7 @@ function Message({ uid, name, avatar, message, timestamp }) {
   const EmojiWidget = () => {
     return (
       <ReactModal
+        ariaHideApp={false}
         isOpen={reactionToggle}
         className="msg__widget__emoji__modal"
         overlayClassName="msg__widget__emoji__overlay"
@@ -118,6 +119,7 @@ function Message({ uid, name, avatar, message, timestamp }) {
   };
 
   const onEmojiClick = (event, emojiObject) => {
+    console.log(emojiObject);
     setReactions([...reactions, emojiObject]);
   };
   // Moment.globalTimezone = 'America/Los_Angeles'
