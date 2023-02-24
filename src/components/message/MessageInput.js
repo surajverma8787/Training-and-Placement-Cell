@@ -8,14 +8,16 @@ import TextIcon from "@mui/icons-material/TextFormat";
 import MicNoneIcon from "@mui/icons-material/MicNone";
 import "./MessageInput.css";
 import EmojiPicker from "emoji-picker-react";
-import RichTextEditor from "./RichTextEditor";
+import RichTextEditor from "./RichText/RichTextEditor";
 import { withHistory } from "slate-history";
 import { createEditor } from "slate";
 import { withReact } from "slate-react";
-
+import { withMentions } from "./RichText/Mention";
 function MessageInput(props) {
   const [emoji, setEmoji] = React.useState(false);
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(() =>
+    withMentions(withHistory(withReact(createEditor())), [])
+  );
   const onToggleEmoji = () => {
     setEmoji(!emoji);
   };

@@ -12,7 +12,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton } from "@material-ui/core";
 import EmojiPicker from "emoji-picker-react";
 import * as _ from "lodash";
-import RichTextViewer from "./RichTextViewer";
+import RichTextViewer from "./RichText/RichTextViewer";
 import ReactModal from "react-modal";
 
 function Message({ uid, name, avatar, message, timestamp }) {
