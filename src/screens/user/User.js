@@ -1,5 +1,5 @@
 import "./User.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -35,6 +35,7 @@ function User() {
   const [isIncomingCall, setIsIncomingCall] = useState(false);
   const [isOutgoingCall, setIsOutgoingCall] = useState(false);
   const [isLive, setIsLive] = useState(false);
+  const messageInputRef = useRef(null);
 
   const togglerDetail = () => {
     setToggle(!toggle);
@@ -252,6 +253,7 @@ function User() {
       .then((message) => {
         setMessages((prevState) => [...prevState, message]);
         setMessage("");
+        messageInputRef.current.clearMessage();
         scrollToEnd();
       })
       .catch((error) =>
@@ -573,8 +575,8 @@ function User() {
           })}
         </div>
         <MessageInput
+          ref={messageInputRef}
           placeholder={`Message ${user?.name.toLowerCase()}`}
-          message={message}
           onMessageChange={(newValue) => setMessage(newValue)}
           onMessageSubmit={(e) => onSubmit(e)}
         />

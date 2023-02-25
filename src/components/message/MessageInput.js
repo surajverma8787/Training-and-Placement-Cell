@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, forwardRef } from "react";
 import { IconButton } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import AddIcon from "@mui/icons-material/Add";
@@ -13,10 +13,13 @@ import { withHistory } from "slate-history";
 import { createEditor } from "slate";
 import { withReact } from "slate-react";
 import { withMentions } from "./RichText/Mention";
-function MessageInput(props) {
+import ErrorBoundary from "../helper/ErrorBoundary";
+
+const MessageInput = forwardRef((props, ref) => {
   const [emoji, setEmoji] = React.useState(false);
-  const editor = useMemo(() =>
-    withMentions(withHistory(withReact(createEditor())), [])
+  const editor = useMemo(
+    () => withMentions(withReact(withHistory(createEditor()))),
+    []
   );
   const onToggleEmoji = () => {
     setEmoji(!emoji);
@@ -24,7 +27,7 @@ function MessageInput(props) {
   const onEmojiChange = (emojiData) => {
     console.log(emoji);
     // props.onMessageChange(props.message + emojiData.emoji);
-    editor.insertText(emojiData.emoji);
+    editor.inserjtText(emojiData.emoji);
   };
   return (
     <div className="user__chatInput">
@@ -45,12 +48,15 @@ function MessageInput(props) {
           value={props.message}
           onChange={(e) => props.onMessageChange(e.target.value)}
         /> */}
-        <RichTextEditor
-          message={props.message}
-          placeholder={props.placeholder}
-          onMessageChange={props.onMessageChange}
-          editor={editor}
-        />
+        <ErrorBoundary>
+          <RichTextEditor
+            ref={ref}
+            message={props.message}
+            placeholder={props.placeholder}
+            onMessageChange={props.onMessageChange}
+            editor={editor}
+          />
+        </ErrorBoundary>
         <div className="toolbar">
           <IconButton>
             <AddIcon />
@@ -78,6 +84,6 @@ function MessageInput(props) {
       </form>
     </div>
   );
-}
+});
 
 export default MessageInput;

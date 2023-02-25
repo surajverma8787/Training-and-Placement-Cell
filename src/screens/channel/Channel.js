@@ -1,5 +1,5 @@
 import "./Channel.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -35,6 +35,7 @@ function Channel() {
   const [isIncomingCall, setIsIncomingCall] = useState(false);
   const [isOutgoingCall, setIsOutgoingCall] = useState(false);
   const [isLive, setIsLive] = useState(false);
+  const messageInputRef = useRef(null);
 
   const togglerDetail = () => {
     setToggle(!toggle);
@@ -150,6 +151,7 @@ function Channel() {
       .then((message) => {
         setMessages((prevState) => [...prevState, message]);
         setMessage("");
+        messageInputRef.current.clearMessage();
         scrollToEnd();
       })
       .catch((error) =>
@@ -459,8 +461,8 @@ function Channel() {
           })}
         </div>
         <MessageInput
+          ref={messageInputRef}
           placeholder={`Message ${channel?.name.toLowerCase()}`}
-          message={message}
           onMessageChange={(newValue) => setMessage(newValue)}
           onMessageSubmit={(e) => onSubmit(e)}
         />

@@ -1,4 +1,11 @@
-import React, { useCallback, useMemo, useEffect, useRef } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { cx, css } from "@emotion/css";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate, ReactEditor } from "slate-react";
@@ -29,6 +36,7 @@ import { RichLeaf } from "./RichLeaf";
 import { insertMention } from "./Mention";
 import { CometChat } from "@cometchat-pro/chat";
 import ReactDOM from "react-dom";
+import { withMentions } from "./Mention";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -129,7 +137,7 @@ const resetNodes = (editor, options) => {
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
-const RichTextEditor = (props) => {
+const RichTextEditor = forwardRef((props, parentRef) => {
   const initialInput = [{ type: "paragraph", children: [{ text: "" }] }];
   const renderElement = useCallback((props) => <RichElement {...props} />, []);
   const renderLeaf = useCallback((props) => <RichLeaf {...props} />, []);
@@ -137,7 +145,12 @@ const RichTextEditor = (props) => {
   const [target, setTarget] = React.useState();
   const [index, setIndex] = React.useState(0);
   const [userList, setUserList] = React.useState([]);
-  const editor = props.editor;
+  // const editor = props.editor;
+  const editor = useMemo(
+    () => withMentions(withReact(withHistory(createEditor()))),
+    []
+  );
+
   const ref = useRef();
   useEffect(() => {
     //get user list based on search term and set it to userList
@@ -145,7 +158,7 @@ const RichTextEditor = (props) => {
     let usersRequest = new CometChat.UsersRequestBuilder()
       .setLimit(10)
       .setSearchKeyword(search)
-      // .searchIn(searchIn)
+      // .searchIn(searchIn)  buggy, returns empty list
       .build();
     usersRequest.fetchNext().then((userList) => {
       setUserList(userList);
@@ -153,11 +166,11 @@ const RichTextEditor = (props) => {
     });
 
     if (target && userList.length > 0) {
-      // const el = ref.current;
-      // const domRange = ReactEditor.toDOMRange(editor, target);
-      // const rect = domRange.getBoundingClientRect();
-      // el.style.top = `${100 + window.pageYOffset + 24}px`;
-      // el.style.left = `${200 + window.pageXOffset}px`;
+      const el = ref.current;
+      const domRange = ReactEditor.toDOMRange(editor, target);
+      const rect = domRange.getBoundingClientRect();
+      el.style.top = `${rect.top + window.pageYOffset + 24}px`;
+      el.style.left = `${rect.left + window.pageXOffset}px`;
     }
   }, [userList.length, editor, index, target, search]);
 
@@ -179,7 +192,7 @@ const RichTextEditor = (props) => {
           case "Enter":
             event.preventDefault();
             Transforms.select(editor, target);
-            // insertMention(editor, userList[index].name);
+            insertMention(editor, userList[index].name);
             setTarget(null);
             break;
           case "Escape":
@@ -198,14 +211,19 @@ const RichTextEditor = (props) => {
         }
       }
     },
-    [index, search, target]
+    [editor, index, target, userList]
   );
-  if (props.message === "") {
+  const clearMessage = () => {
     editor.children = initialInput;
     resetNodes(editor, { nodes: initialInput });
     //re-render the editor
     editor.onChange();
-  }
+  };
+
+  useImperativeHandle(parentRef, () => ({
+    clearMessage,
+  }));
+
   const onChange = (value) => {
     props.onMessageChange(JSON.stringify(value));
     const { selection } = editor;
@@ -224,6 +242,7 @@ const RichTextEditor = (props) => {
 
       if (beforeMatch && afterMatch) {
         setTarget(beforeRange);
+        console.log("beforeRange", beforeRange);
         setSearch(beforeMatch[1]);
         setIndex(0);
         return;
@@ -234,7 +253,13 @@ const RichTextEditor = (props) => {
   };
 
   return (
-    <Slate editor={editor} value={initialInput} onChange={onChange}>
+    <Slate
+      editor={editor}
+      value={initialInput}
+      onChange={(value) => {
+        onChange(value);
+      }}
+    >
       <Toolbar>
         <MarkButton format="bold" Icon={FormatBoldIcon} />
         <MarkButton format="italic" Icon={FormatItalicIcon} />
@@ -290,7 +315,7 @@ const RichTextEditor = (props) => {
       )}
     </Slate>
   );
-};
+});
 
 const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(

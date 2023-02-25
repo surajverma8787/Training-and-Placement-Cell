@@ -26,6 +26,7 @@ export const Mention = ({ attributes, children, element }) => {
       {...attributes}
       contentEditable={false}
       data-cy={`mention-${element.character.replace(" ", "-")}`}
+      slate-type="mention"
       style={style}
     >
       {children}@{element.character}
@@ -57,6 +58,7 @@ export const insertMention = (editor, character) => {
     character,
     children: [{ text: "" }],
   };
-  Transforms.insertNodes(editor, [mention]);
+  Transforms.insertNodes(editor, mention);
+  console.log(editor.children);
   Transforms.move(editor);
 };
