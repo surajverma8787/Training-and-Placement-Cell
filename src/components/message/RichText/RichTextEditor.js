@@ -37,6 +37,7 @@ import { insertMention } from "./Mention";
 import { CometChat } from "@cometchat-pro/chat";
 import ReactDOM from "react-dom";
 import { withMentions } from "./Mention";
+import { withEmojis } from "./Emoji";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -147,7 +148,7 @@ const RichTextEditor = forwardRef((props, parentRef) => {
   const [userList, setUserList] = React.useState([]);
   // const editor = props.editor;
   const editor = useMemo(
-    () => withMentions(withReact(withHistory(createEditor()))),
+    () => withEmojis(withMentions(withReact(withHistory(createEditor())))),
     []
   );
 
@@ -220,13 +221,13 @@ const RichTextEditor = forwardRef((props, parentRef) => {
     editor.onChange();
   };
 
-  const insertText = (text) => {
-    editor.insertText(text);
+  const insertEmoji = (emojiUrl) => {
+    editor.insertData(emojiUrl);
   };
 
   useImperativeHandle(parentRef, () => ({
     clearMessage,
-    insertText,
+    insertEmoji,
   }));
 
   const onChange = (value) => {

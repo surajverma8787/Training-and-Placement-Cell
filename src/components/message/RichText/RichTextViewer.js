@@ -5,9 +5,14 @@ import { Slate, Editable, withReact } from "slate-react";
 import { RichElement } from "./RichElement";
 import { RichLeaf } from "./RichLeaf";
 import { withMentions } from "./Mention";
+import { withEmojis } from "./Emoji";
+
 import "./RichTextViewer.css";
 const RichTextViewer = (props) => {
-  const editor = useMemo(() => withMentions(withReact(createEditor())), []);
+  const editor = useMemo(
+    () => withEmojis(withMentions(withReact(createEditor()))),
+    []
+  );
   const renderElement = useCallback((props) => <RichElement {...props} />, []);
   const renderLeaf = useCallback((props) => <RichLeaf {...props} />, []);
   return props.message ? (

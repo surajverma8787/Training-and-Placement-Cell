@@ -1,4 +1,5 @@
 import { Mention } from "./Mention";
+import { Emoji } from "./Emoji";
 export const RichElement = ({ attributes, children, element }) => {
   const style = { textAlign: element.align };
   const props = { attributes, children, element };
@@ -41,6 +42,8 @@ export const RichElement = ({ attributes, children, element }) => {
       );
     case "mention":
       return <Mention {...props} />;
+    case "emoji":
+      return <Emoji {...props} />;
     default:
       return (
         <p style={style} {...attributes}>

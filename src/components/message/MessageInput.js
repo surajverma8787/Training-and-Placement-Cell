@@ -23,7 +23,7 @@ const MessageInput = forwardRef((props, ref) => {
   const onEmojiChange = (emojiData) => {
     console.log(emoji);
     // props.onMessageChange(props.message + emojiData.emoji);
-    ref.current.insertText(emojiData.emoji);
+    ref.current.insertEmoji(emojiData.getImageUrl());
   };
   return (
     <div className="user__chatInput">
