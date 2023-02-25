@@ -6,6 +6,10 @@
   position: relative;
 }
 
+.message__container {
+  margin: 20px 0px;
+}
+
 .message__container:hover {
   background-color: #f3f3f3;
 }
