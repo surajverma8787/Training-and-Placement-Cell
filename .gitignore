@@ -27,3 +27,6 @@ app.config.js
 *.drawio
 
 .firebaserc
+firebase.json
+.firebase/*
+.firebase
