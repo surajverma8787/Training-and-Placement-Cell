@@ -17,17 +17,13 @@ import ErrorBoundary from "../helper/ErrorBoundary";
 
 const MessageInput = forwardRef((props, ref) => {
   const [emoji, setEmoji] = React.useState(false);
-  const editor = useMemo(
-    () => withMentions(withReact(withHistory(createEditor()))),
-    []
-  );
   const onToggleEmoji = () => {
     setEmoji(!emoji);
   };
   const onEmojiChange = (emojiData) => {
     console.log(emoji);
     // props.onMessageChange(props.message + emojiData.emoji);
-    editor.insertText(emojiData.emoji);
+    ref.current.insertText(emojiData.emoji);
   };
   return (
     <div className="user__chatInput">
@@ -54,7 +50,6 @@ const MessageInput = forwardRef((props, ref) => {
             message={props.message}
             placeholder={props.placeholder}
             onMessageChange={props.onMessageChange}
-            editor={editor}
           />
         </ErrorBoundary>
         <div className="toolbar">

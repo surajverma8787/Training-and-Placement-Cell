@@ -220,8 +220,13 @@ const RichTextEditor = forwardRef((props, parentRef) => {
     editor.onChange();
   };
 
+  const insertText = (text) => {
+    editor.insertText(text);
+  };
+
   useImperativeHandle(parentRef, () => ({
     clearMessage,
+    insertText,
   }));
 
   const onChange = (value) => {
