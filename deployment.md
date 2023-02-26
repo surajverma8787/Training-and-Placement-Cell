@@ -31,6 +31,14 @@ firebase init
 
 Select Hosting and press spacebar to select it. Press enter to confirm your choice.
 
+## Build your project
+
+```
+npm run build
+```
+
+Note: build output directory is build, firebase.json is configured to use this directory as public directory.
+
 ## Deploy your project
 
 ```

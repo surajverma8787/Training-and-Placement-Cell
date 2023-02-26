@@ -1,6 +1,7 @@
 body {
   --slack-color: #3f0e40;
   overflow: hidden;
+  font-family: "Lato", sans-serif;
 }
 
 .app__body {

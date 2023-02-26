@@ -9,7 +9,7 @@ export const withEmojis = (editor) => {
   const { insertData, isVoid, isInline } = editor;
 
   editor.isVoid = (element) => {
-    return element.type === "image" ? true : isVoid(element);
+    return element.type === "emoji" ? true : isVoid(element);
   };
 
   editor.isInline = (element) => {
