@@ -15,15 +15,19 @@ Read the full tutorial here: [**>> How to Build a Team Messenger Site With React
 
 This example shows How to Build a Team Messenger Site With React (Slack Clone):
 
-![Slack Clone](./screenshots/0.gif)
+![Slack Clone](./screenshots/slack.gif)
 
 <center><figcaption>Slack Clone</figcaption></center>
 
-![Slack Clone](./screenshots/1.png)
+![Slack Clone](./screenshots/calling.png)
 
 <center><figcaption>Slack Clone Call Screen</figcaption></center>
 
-![Slack Clone](./screenshots/2.png)
+![Slack Clone](./screenshots/messages.png)
+
+<center><figcaption>Slack Clone Message Screen</figcaption></center>
+
+![Slack Clone](./screenshots/login_page.png)
 
 <center><figcaption>Slack Clone Login Screen</figcaption></center>
 
@@ -58,7 +62,7 @@ To run the demo follow these steps:
 4. From the Quick Start copy the **APP_ID, APP_REGION and AUTH_KEY**. These will be used later.
 5. Also copy the **REST_API_KEY** from the API & Auth Key tab.
 6. Navigate to the Users tab, and delete all the default users and groups leaving it clean **(very important)**.
-7. Download the repository [here](https://github.com/Daltonic/slack-clone/archive/master.zip) or by running `git clone https://github.com/Daltonic/slack-clone.git` and open it in a code editor.
+7. Download the repository [here](https://github.com/TheCrowd/slack-clone.git) or by running `git clone https://github.com/TheCrowd/slack-clone.git` and open it in a code editor.
 8. [Head to Firebase and create a new project](https://console.firebase.google.com)
 9. Create a file called **app.config.js** in the **src** folder of your project.
 10. Import and inject your secret keys in the **app.config.js** file containing your CometChat and Firebase in this manner.
@@ -94,7 +98,7 @@ export { firebaseConfig, cometChat };
     npm start
 ```
 
-Questions about running the demo? [Open an issue](https://github.com/Daltonic/slack-clone/issues). We're here to help ✌️
+Questions about running the demo? [Open an issue](https://github.com/TheCrowd/slack-clone.git). We're here to help ✌️
 
 ## Useful links
 
