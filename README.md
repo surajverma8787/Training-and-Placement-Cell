@@ -1,5 +1,16 @@
 # How to Build a Team Messenger Site With React (Slack Clone)
 
+This repo is a fork of [slack-clone](https://github.com/Daltonic/slack-clone)
+
+Added a few features to make it nicer:
+
+- Better UI
+- Rich text editor for messages
+- Emojis for messages
+- Mentions for messages
+- Allow users update their avatar
+- Grouped messages by date
+
 Read the full tutorial here: [**>> How to Build a Team Messenger Site With React (Slack Clone)**](https://www.cometchat.com/tutorials/#)
 
 This example shows How to Build a Team Messenger Site With React (Slack Clone):
@@ -20,20 +31,22 @@ This example shows How to Build a Team Messenger Site With React (Slack Clone):
 
 This demo uses:
 
-- CometChat Pro 2.3.0
+- CometChat Pro 3.0.10
 - Firebase
 - React
 - Material Icons
 - node v16.14.2
+- slatejs
+- emoji-picker-react
 
 ## Todo list
 
-- [] update message input box to support emoji，markdown and attachments
-- [] enable users to expand/collapse channel list and DM list
+- [x] update message input box to support emoji，markdown and attachments
+- [x] enable users to expand/collapse channel list and DM list
 - [] enable users to create a new chat from the clicking on sidebar button
 - [] refactor the code to use redux
 - [] refactor the code to use docker
-- [] refactor the code to use typescript(strech goal)
+- [] refactor the code to use typescript
 
 ## Running the demo
 
