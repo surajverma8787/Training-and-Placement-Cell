@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./components/header/Header";
+import Header from "./components/Header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import Channel from "./screens/channel/Channel";
 import Login from "./screens/login/Login";
@@ -7,6 +7,7 @@ import User from "./screens/user/User";
 import Home from "./screens/home/Home";
 import Add from "./screens/add/Add";
 import { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,

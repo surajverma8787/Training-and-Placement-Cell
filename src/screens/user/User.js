@@ -664,9 +664,8 @@ function User() {
             {users.map((user) => (
               <div
                 key={user?.uid}
-                className={`available__member ${
-                  user?.status === "online" ? "isOnline" : ""
-                }`}
+                className={`available__member ${user?.status === "online" ? "isOnline" : ""
+                  }`}
               >
                 <Avatar src={user?.avatar} alt={user?.name} />
                 <Link to={`/users/${user?.uid}`}>{user?.name}</Link>

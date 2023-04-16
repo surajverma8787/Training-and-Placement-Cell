@@ -8,32 +8,24 @@ import gaoQiQiang from "../../img/gaoqiqiang.jpg";
 import daSao from "../../img/dasao.jpeg";
 
 const userData = {
-  uid: "superhero1",
-  name: "大嫂",
-};
-
-const userData1 = {
-  uid: "superhero2",
-  name: "强哥",
+  uid: "8787",
+  name: "Suraj Verma",
 };
 
 const testUser = new CometChat.User(userData.uid);
-
-const testUser1 = new CometChat.User(userData1.uid);
 
 function Login() {
   const [loading, setLoading] = useState(false);
 
   const signIn = () => {
-    // setLoading(true)
-    // auth
-    //   .signInWithPopup(provider)
-    //   .then((res) => loginCometChat(res.user))
-    //   .catch((error) => {
-    //     setLoading(false)
-    //     alert(error.message)
-    //   })
-    loginCometChat(testUser);
+    setLoading(true)
+    auth
+      .signInWithPopup(provider)
+      .then((res) => loginCometChat(res.user))
+      .catch((error) => {
+        setLoading(false)
+        alert(error.message)
+      })
   };
 
   const loginCometChat = (data) => {
@@ -89,7 +81,7 @@ function Login() {
             <img src={"/icons8-google-48.png"} alt="Google Logo Icon" />
             {!loading ? "Continue With Google" : <div id="loading"></div>}
           </Button>
-          <Button className="apple" onClick={() => loginCometChat(testUser1)}>
+          <Button className="apple" onClick={() => loginCometChat(userData)}>
             <img src={"/icons8-apple-logo-30.png"} alt="Apple Logo Icon" />
             {!loading ? "Continue With Apple" : <div id="loading"></div>}
           </Button>
