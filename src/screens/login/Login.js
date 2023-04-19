@@ -13,10 +13,9 @@ const userData = {
 };
 
 const testUser = new CometChat.User(userData.uid);
-
+// alert(JSON.stringify(res.user, null, 4))
 function Login() {
   const [loading, setLoading] = useState(false);
-
   const signIn = () => {
     setLoading(true)
     auth
@@ -54,8 +53,8 @@ function Login() {
     const authKey = cometChat.AUTH_KEY;
     const user = new CometChat.User(data.uid);
 
-    user.setName(data.name);
-    user.setAvatar(data.avatar);
+    user.setName(data.displayName);
+    user.setAvatar(data.photoURL);
 
     CometChat.createUser(user, authKey)
       .then(() => {
@@ -63,7 +62,6 @@ function Login() {
         alert("You are now signed up, click the button again to login");
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         alert(error.message);
       });
