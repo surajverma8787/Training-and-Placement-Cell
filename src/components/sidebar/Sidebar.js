@@ -17,8 +17,9 @@ import { Link, useHistory } from "react-router-dom";
 
 function Sidebar() {
   const [channels, setChannels] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [dms, setDms] = useState([]);
+  const [role, SetRole] = useState("")
   const [channelExpanded, setChannelExpanded] = useState(true);
   const [dmExpanded, setDmExpanded] = useState(true);
   const history = useHistory();
@@ -103,13 +104,13 @@ function Sidebar() {
         <CreateIcon />
       </div>
       <div className="sidebar__options">
-        <SidebarOption Icon={InsertCommentIcon} title="Thread" />
+        {/* <SidebarOption Icon={InsertCommentIcon} title="Thread" />
         <SidebarOption Icon={AlternateEmailIcon} title="Mentions & Reactions" />
         <SidebarOption Icon={MoreVertIcon} title="More" />
-        <hr />
+        <hr /> */}
         <SidebarOptionHeader
           Icon={channelExpanded ? ArrowDropDownIcon : ArrowRightIcon}
-          title="Channels"
+          title="Groups"
           onClickHandler={() => {
             setChannelExpanded(!channelExpanded);
           }}
@@ -117,51 +118,56 @@ function Sidebar() {
         <hr />
         {channelExpanded
           ? channels.map((channel) =>
-              channel.type === "private" ? (
-                <SidebarOption
-                  Icon={LockOutlinedIcon}
-                  title={channel.name}
-                  id={channel.guid}
-                  key={channel.guid}
-                  sub="sidebarOption__sub"
-                />
-              ) : (
-                <SidebarOption
-                  title={channel.name}
-                  id={channel.guid}
-                  key={channel.guid}
-                  sub="sidebarOption__sub"
-                />
-              )
+            channel.type === "private" ? (
+              <SidebarOption
+                Icon={LockOutlinedIcon}
+                title={channel.name}
+                id={channel.guid}
+                key={channel.guid}
+                sub="sidebarOption__sub"
+              />
+            ) : (
+              <SidebarOption
+                title={channel.name}
+                id={channel.guid}
+                key={channel.guid}
+                sub="sidebarOption__sub"
+              />
             )
+          )
           : null}
+        {
+          user.role == "Studenttpc" ? (
+            <SidebarOption
+              Icon={AddIcon}
+              title="New Group"
+              sub="sidebarOption__sub"
+              addChannelOption
+            />
+          ) :
+            null
+        }
 
-        <SidebarOption
-          Icon={AddIcon}
-          title="Add Channel"
-          sub="sidebarOption__sub"
-          addChannelOption
-        />
         <hr />
         <SidebarOptionHeader
           Icon={dmExpanded ? ArrowDropDownIcon : ArrowRightIcon}
-          title="Direct Messages"
+          title="Messages"
           onClickHandler={() => setDmExpanded(!dmExpanded)}
         />
         <hr />
         {dmExpanded
           ? dms.map((dm) => (
-              <SidebarOption
-                Icon={FiberManualRecordIcon}
-                title={dm.name}
-                id={dm.uid}
-                key={dm.uid}
-                sub="sidebarOption__sub sidebarOption__color"
-                user
-                avatar={dm.avatar}
-                online={dm.status === "online" ? "isOnline" : ""}
-              />
-            ))
+            <SidebarOption
+              Icon={FiberManualRecordIcon}
+              title={dm.name}
+              id={dm.uid}
+              key={dm.uid}
+              sub="sidebarOption__sub sidebarOption__color"
+              user
+              avatar={dm.avatar}
+              online={dm.status === "online" ? "isOnline" : ""}
+            />
+          ))
           : null}
       </div>
 

@@ -4,6 +4,11 @@ import "./index.css";
 import App from "./App";
 import { CometChat } from "@cometchat-pro/chat";
 import { cometChat } from "./app.config";
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+
+const store = createStore(() => [], {}, applyMiddleware());
+
 
 const appID = cometChat.APP_ID;
 const region = cometChat.APP_REGION;
@@ -15,9 +20,9 @@ const appSetting = new CometChat.AppSettingsBuilder()
 CometChat.init(appID, appSetting)
   .then(() => {
     ReactDOM.render(
-      <React.StrictMode>
+      <Provider store={store}>
         <App />
-      </React.StrictMode>,
+      </Provider>,
       document.getElementById("root")
     );
     console.log("Initialization completed successfully");

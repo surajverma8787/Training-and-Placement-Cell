@@ -12,19 +12,18 @@ function Home() {
   return (
     <div className="home">
       <div className="home__container">
-        <img src="/logo.png" alt="Slack Logo" />
-        <h1>Welcome to Slack</h1>
+        <img src="/logo.png" alt="IET Logo" />
+        <h1>Training Placement Cell, IET Lucknow</h1>
         <p>
-          Slack brings all your team communication into one place, makes it all
-          instantly searchable and available wherever you go.
+          This platform has been created to consolidate the placement procedure for IET Lucknow.
         </p>
 
-        <p>
+        {/* <p>
           Our aim is to make your working life simpler, more pleasant and more
           productive.
-        </p>
+        </p> */}
 
-        <Button onClick={addChannel}>Create Channel</Button>
+        {/* <Button onClick={addChannel}>Create Channel</Button> */}
       </div>
     </div>
   )

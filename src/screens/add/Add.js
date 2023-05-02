@@ -67,13 +67,13 @@ function Add() {
   return (
     <div className="add">
       <form className="add__container">
-        <img src="/logo.png" alt="Slack Logo" />
-        <h1>Add New Channel</h1>
+        <img src="/logo.png" alt="IET Logo" />
+        <h1>Add New Group</h1>
         <div className="add__form">
           <input
             name="channel"
             value={channel}
-            placeholder="Channel Name"
+            placeholder="Group Name"
             onChange={(e) => setChannel(e.target.value)}
             required
           />
@@ -93,7 +93,7 @@ function Add() {
         </div>
 
         <Button onClick={addChannel}>
-          {!loading ? 'Create Channel' : <div id="loading"></div>}
+          {!loading ? 'Create Group' : <div id="loading"></div>}
         </Button>
       </form>
     </div>

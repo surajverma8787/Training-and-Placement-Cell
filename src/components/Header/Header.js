@@ -23,15 +23,14 @@ function Header() {
 
   return (
     <div className="header">
-      <div className="header__left">
+      {/* <div className="header__left">
         <AccessTimeIcon />
       </div>
       <div className="header__middle">
         <SearchIcon />
         <input placeholder="Search a user or a message" />
-      </div>
+      </div> */}
       <div className="header__right">
-        <HelpOutlineIcon />
         <Avatar
           className="header__avatar"
           src={user?.avatar}

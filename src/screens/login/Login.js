@@ -13,9 +13,10 @@ const userData = {
 };
 
 const testUser = new CometChat.User(userData.uid);
-// alert(JSON.stringify(res.user, null, 4))
+
 function Login() {
   const [loading, setLoading] = useState(false);
+
   const signIn = () => {
     setLoading(true)
     auth
@@ -29,7 +30,6 @@ function Login() {
 
   const loginCometChat = (data) => {
     const authKey = cometChat.AUTH_KEY;
-
     CometChat.login(data.uid, authKey)
       .then((userData) => {
         console.log("login user", userData);
@@ -71,18 +71,20 @@ function Login() {
     <div className="login">
       <div className="login__container">
         <img src={"/logo.png"} alt="Slack Logo" />
-
-        <h4>Sign in to CometChat</h4>
-        <p>cometchat.slack.com</p>
+        <h1>Training Placement Portal, IET Lucknow</h1>
+        <br />
+        <br />
+        <h2>Sign In</h2>
+        {/* <p>cometchat.slack.com</p> */}
         <div className="third_party_login">
           <Button className="google" onClick={signIn}>
             <img src={"/icons8-google-48.png"} alt="Google Logo Icon" />
             {!loading ? "Continue With Google" : <div id="loading"></div>}
           </Button>
-          <Button className="apple" onClick={() => loginCometChat(userData)}>
+          {/* <Button className="apple" onClick={() => loginCometChat(userData)}>
             <img src={"/icons8-apple-logo-30.png"} alt="Apple Logo Icon" />
             {!loading ? "Continue With Apple" : <div id="loading"></div>}
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
