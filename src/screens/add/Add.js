@@ -10,7 +10,7 @@ function Add() {
 
   const addChannel = () => {
     setLoading(true)
-    if (channel === '' || privacy === '') {
+    if (channel === '') {
       setLoading(false)
       alert('Please fill the form completely')
       return null
@@ -79,7 +79,7 @@ function Add() {
           />
         </div>
 
-        <div className="add__form">
+        {/* <div className="add__form">
           <select
             name="privacy"
             value={privacy}
@@ -90,7 +90,7 @@ function Add() {
             <option value={false}>Public</option>
             <option value={true}>Private</option>
           </select>
-        </div>
+        </div> */}
 
         <Button onClick={addChannel}>
           {!loading ? 'Create Group' : <div id="loading"></div>}

@@ -554,12 +554,12 @@ function User() {
                 <FiberManualRecordIcon />
                 {user?.name}
               </strong>
-              <StarBorderOutlinedIcon />
+              {/* <StarBorderOutlinedIcon /> */}
             </h4>
           </div>
           <div className="user__headerRight">
             <CallIcon onClick={initiateCall} />
-            <InfoOutlinedIcon onClick={togglerDetail} />
+            {/* <InfoOutlinedIcon onClick={togglerDetail} /> */}
           </div>
         </div>
 

@@ -25,7 +25,7 @@ function Channel() {
   const [members, setMembers] = useState([]);
   const [users, setUsers] = useState([]);
   const [keyword, setKeyword] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
   const [message, setMessage] = useState("");
   const [searching, setSearching] = useState(false);
   const [toggle, setToggle] = useState(false);
@@ -388,7 +388,6 @@ function Channel() {
     getMembers(id);
     listenForMessage(id);
     listenForCall(id);
-
     setCurrentUser(JSON.parse(localStorage.getItem("user")));
   }, [id]);
   const messageGroups = getMessageGroups();
@@ -440,11 +439,17 @@ function Channel() {
                 {channel?.type === "private" ? <LockIcon /> : "#"}
                 {channel?.name}
               </strong>
-              <StarBorderOutlinedIcon />
+              {/* <StarBorderOutlinedIcon /> */}
             </h4>
           </div>
           <div className="channel__headerRight">
-            <PersonAddOutlinedIcon onClick={togglerAdd} />
+            {
+              currentUser.role == "tpcorg" ? (
+                <PersonAddOutlinedIcon onClick={togglerAdd} />
+              ) : (
+                null
+              )
+            }
             <InfoOutlinedIcon onClick={togglerDetail} />
           </div>
         </div>
@@ -481,22 +486,22 @@ function Channel() {
         </div>
         <div className="channel__detailsBody">
           <div className="channel__detailsActions">
-            <span>
+            {/* <span>
               <PersonAddOutlinedIcon onClick={togglerAdd} />
               Add
             </span>
             <span>
               <SearchIcon onClick={togglerAdd} />
               Find
-            </span>
+            </span> */}
             <span>
               <CallIcon onClick={initiateCall} />
               Call
             </span>
-            <span>
+            {/* <span>
               <MoreHorizIcon />
               More
-            </span>
+            </span> */}
           </div>
           <hr />
           <div className="channel__detailsMembers">
@@ -504,9 +509,8 @@ function Channel() {
             {members.map((member) => (
               <div
                 key={member?.uid}
-                className={`available__member ${
-                  member?.status === "online" ? "isOnline" : ""
-                }`}
+                className={`available__member ${member?.status === "online" ? "isOnline" : ""
+                  }`}
               >
                 <Avatar src={member?.avatar} alt={member?.name} />
                 <Link to={`/users/${member?.uid}`}>{member?.name}</Link>
@@ -569,9 +573,8 @@ function Channel() {
             {users.map((user) => (
               <div
                 key={user?.uid}
-                className={`available__member ${
-                  user?.status === "online" ? "isOnline" : ""
-                }`}
+                className={`available__member ${user?.status === "online" ? "isOnline" : ""
+                  }`}
               >
                 <Avatar src={user?.avatar} alt={user?.name} />
                 <Link to={`/users/${user?.uid}`}>{user?.name}</Link>

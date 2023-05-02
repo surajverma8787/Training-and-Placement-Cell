@@ -101,7 +101,7 @@ function Sidebar() {
             {user?.name}
           </h3>
         </div>
-        <CreateIcon />
+        {/* <CreateIcon /> */}
       </div>
       <div className="sidebar__options">
         {/* <SidebarOption Icon={InsertCommentIcon} title="Thread" />
@@ -137,7 +137,7 @@ function Sidebar() {
           )
           : null}
         {
-          user.role == "Studenttpc" ? (
+          user.role == "tpcorg" ? (
             <SidebarOption
               Icon={AddIcon}
               title="New Group"

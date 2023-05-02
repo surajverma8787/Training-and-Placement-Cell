@@ -59,7 +59,7 @@ const MessageInput = forwardRef((props, ref) => {
           <IconButton onClick={onToggleEmoji}>
             <EmojiIcon />
           </IconButton>
-          <IconButton>
+          {/* <IconButton>
             <AtIcon />
           </IconButton>
           <IconButton>
@@ -67,7 +67,7 @@ const MessageInput = forwardRef((props, ref) => {
           </IconButton>
           <IconButton>
             <MicNoneIcon />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             className="submit__button"
             type="submit"
