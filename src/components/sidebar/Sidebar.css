@@ -59,7 +59,7 @@
 }
 
 .sidebar__options>hr {
-  border: 1px solid #49274b;
+  border: 1px solid #ffffff;
 }
 
 .sidebar__options::-webkit-scrollbar {
@@ -81,7 +81,7 @@
   padding: 10px 0;
   outline: none;
   border: none;
-  background-color: #340e36;
+  background-color: #1b0e36;
   color: white;
   cursor: pointer;
 }
